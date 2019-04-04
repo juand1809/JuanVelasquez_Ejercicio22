@@ -1,44 +1,44 @@
 #include <iostream>
 #include <cstdlib>
+#include <cmath>
 
 using std::cout;
 using std::endl;
 
 void metropolis(int N);
-double g(float x);
+double g(double x);
 
 int main(){
-    int x;
-    x = 10000;
-    metropolis(x);          
+    metropolis(10000);
+    return 0;
 }    
 
 
 void metropolis(int N){
-    float sigma;
+    float sigma,r,alpha,paso;
     int i;
     double x,x_prop;
-    float paso;
-    srand48(1);
-    float r,alpha;
+    srand48(10);
         
     sigma = 1.0;
     i = 0;
     x = drand48();
     while (i < N){
-        paso = drand48() - sigma;
+        paso = 2.0*drand48() - sigma;
         x_prop = x + paso;
-        r = g(x_prop)/g(x);
+        r = std::min(1.0,g(x_prop)/g(x));
         alpha = drand48();
         if (alpha < r){
-            cout << x_prop << endl;
+            x = x_prop;
         }
         else{
-            cout << x << endl;
-    }
-    i++       
+            x = x;
+        }
+        cout << x << endl;
+        i++; 
+    }     
 }
     
-double g(double x){
-    return exp(-x + (x/2))
+double g(double x) {
+    return exp(-x + (x/2));
 }
